@@ -1,58 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="4dp"
-    app:cardUseCompatPadding="true">
+    app:cardCornerRadius="12dp"
+    app:cardElevation="6dp"
+    app:cardUseCompatPadding="true"
+    android:layout_margin="8dp">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@android:color/white"
+        android:padding="16dp">
+
+        <!-- Date on top-left -->
+        <TextView
+            android:id="@+id/noteDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10 Apr 2025"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="12sp" />
+
+        <!-- Title below date -->
+        <TextView
+            android:id="@+id/noteTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Note Title"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:maxLines="1"
+            android:textStyle="bold" />
+
+        <!-- Note Content -->
+        <TextView
+            android:id="@+id/noteText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="This is the content of the note..."
+            android:textColor="@android:color/darker_gray"
+            android:textSize="16sp"
+            android:maxLines="3"
+            android:ellipsize="end" />
+
+        <!-- Buttons Row -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:backgroundTint="@color/white"
-            android:padding="16dp">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp">
-            <TextView
-                android:id="@+id/noteTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Note Title"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            android:gravity="end">
 
             <ImageView
                 android:id="@+id/updateButton"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="30dp"
-                android:src="@drawable/icons8_edit"/>
-                <ImageView
-                    android:id="@+id/deleteButton"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_alignParentEnd="true"
-                    android:src="@drawable/icons8_delete"/>
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/icons8_edit"
+                android:contentDescription="Edit" />
 
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/noteText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="This is the content of the note..."
-                android:textColor="@android:color/darker_gray"
-                android:maxLines="3" />
+            <ImageView
+                android:id="@+id/deleteButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/icons8_delete"
+                android:contentDescription="Delete" />
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
 
-
-
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

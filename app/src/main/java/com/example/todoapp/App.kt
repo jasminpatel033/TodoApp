@@ -2,15 +2,12 @@ package com.example.todoapp
 
 import android.content.Intent
 import android.os.Bundle
-import android.renderscript.ScriptGroup
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todoapp.databinding.ActivityAppBinding
 
 
-class MainActivity : AppCompatActivity() {
+class App : AppCompatActivity() {
     private lateinit var binding: ActivityAppBinding
     private lateinit var db: NoteDatabaseHelper
     private lateinit var notesAdapter: NotesAdapter
@@ -24,8 +21,17 @@ class MainActivity : AppCompatActivity() {
         binding.notesRecyclerview.adapter = notesAdapter
 
         binding.addButton.setOnClickListener {
-            val intent = Intent(this, AddNoteACtivity::class.java)
+            val intent = Intent(this, AddNoteActivity::class.java)
             startActivity(intent)
+        }
+        binding.profileButton.setOnClickListener {
+            val email = intent.getStringExtra("email")
+            if (email != null) {
+                val intent = Intent(this, profileinfo::class.java)
+                intent.putExtra("email", email)
+                startActivity(intent)
+            }
+
         }
 
     }

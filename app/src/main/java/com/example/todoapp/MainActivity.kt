@@ -76,7 +76,10 @@ class MainActivity : AppCompatActivity() {
 
         if (userExists) {
             Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this, App::class.java))
+            val email = binding.editTextEmail.text.toString().trim()
+            val intent= Intent(this, App::class.java)
+            intent.putExtra("email",email)
+            startActivity(intent)
             finish()
         } else {
             Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show()

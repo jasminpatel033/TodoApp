@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:background="@color/white"
     tools:context=".MainActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -12,16 +13,26 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="16dp"
-        android:text="Notes."
+        android:text="TodoList."
         android:layout_marginStart="18dp"
         android:textColor="@color/black"
         android:textSize="24dp"/>
+
+     <ImageView
+        android:id="@+id/profileButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+         android:layout_marginTop="5dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="28dp"
+        android:src="@drawable/vecteezy_profile_icon_design_vector_5544718"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notesRecyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="50dp"
+        android:background="#B7F173"
         android:padding="16dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

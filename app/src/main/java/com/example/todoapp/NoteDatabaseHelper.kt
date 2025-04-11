@@ -14,12 +14,13 @@ class NoteDatabaseHelper(context: Context) : SQLiteOpenHelper(context, database_
         private const val column_id="id"
         private const val column_title="title"
         private const val column_content="content"
+        private const val column_date="date"
 
 
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
-        val createTableQuery = "create table $table_name($column_id integer primary key,$column_title text,$column_content text)"
+        val createTableQuery = "create table $table_name($column_id integer primary key,$column_title text,$column_content text,$column_date text)"
         db?.execSQL(createTableQuery)
     }
 
@@ -33,6 +34,7 @@ class NoteDatabaseHelper(context: Context) : SQLiteOpenHelper(context, database_
         val values= ContentValues().apply {
             put(column_title,note.title)
             put(column_content,note.content)
+            put(column_date, note.date)
         }
         db.insert(table_name,null,values)
         db.close()
@@ -46,7 +48,8 @@ class NoteDatabaseHelper(context: Context) : SQLiteOpenHelper(context, database_
             val id = cursor.getInt(cursor.getColumnIndexOrThrow(column_id))
             val title = cursor.getString(cursor.getColumnIndexOrThrow(column_title))
             val content = cursor.getString(cursor.getColumnIndexOrThrow(column_content))
-            val note = Note(id,title,content)
+            val date = cursor.getString(cursor.getColumnIndexOrThrow(column_date))
+            val note = Note(id,title,content,date)
             notesList.add(note)
         }
         cursor.close()
@@ -58,6 +61,7 @@ class NoteDatabaseHelper(context: Context) : SQLiteOpenHelper(context, database_
         val values = ContentValues().apply {
             put(column_title,note.title)
             put(column_content,note.content)
+            put(column_date, note.date)
         }
         val whereClause = "$column_id=?"
         val whereArgs = arrayOf(note.id.toString())
@@ -66,15 +70,16 @@ class NoteDatabaseHelper(context: Context) : SQLiteOpenHelper(context, database_
     }
     fun getNoteByID(noteId: Int):Note{
         val db =readableDatabase
-        val query = "select * from $table_name where $column_id=$noteId"
+        val query = "SELECT * FROM $table_name ORDER BY $column_date DESC"
         val cursor=db.rawQuery(query,null)
         cursor.moveToFirst()
         val id = cursor.getInt(cursor.getColumnIndexOrThrow(column_id))
         val title = cursor.getString(cursor.getColumnIndexOrThrow(column_title))
         val content = cursor.getString(cursor.getColumnIndexOrThrow(column_content))
+        val date = cursor.getString(cursor.getColumnIndexOrThrow(column_date))
         cursor.close()
         db.close()
-        return Note(id,title,content)
+        return Note(id,title,content,date)
     }
     fun deleteNote(noteId: Int){
         val db = writableDatabase
