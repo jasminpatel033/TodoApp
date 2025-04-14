@@ -26,7 +26,7 @@ class AddNoteActivity : AppCompatActivity() {
                 { _, year, month, dayOfMonth ->
                     calendar.set(year, month, dayOfMonth)
                     val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-                    var selectedDate = sdf.format(calendar.time)
+                    selectedDate = sdf.format(calendar.time)
                     binding.dateEditText.setText(selectedDate)
                 },
                 calendar.get(Calendar.YEAR),
@@ -38,7 +38,6 @@ class AddNoteActivity : AppCompatActivity() {
         binding.savebutton.setOnClickListener{
             val title = binding.titleEdittext.text.toString()
             val content = binding.contentEdittext.text.toString()
-            val selectedDate = " "
             if (validateInputs(title,selectedDate)) {
                 val note = Note(0, title, content,selectedDate)
                 db.insertNote(note)

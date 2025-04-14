@@ -31,6 +31,7 @@ class NotesAdapter(private var notes: List<Note>,context: Context):
         val note = notes[position]
         holder.titleTaxtView.text=note.title
         holder.contentTextView.text=note.content
+        holder.itemView.findViewById<TextView>(R.id.noteDate).text = note.date
         holder.updateButton.setOnClickListener{
             val intent=Intent(holder.itemView.context,UpdateNoteActivity::class.java).apply {
                 putExtra("note_id",note.id)

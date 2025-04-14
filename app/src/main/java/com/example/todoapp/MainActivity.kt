@@ -76,13 +76,27 @@ class MainActivity : AppCompatActivity() {
 
         if (userExists) {
             Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
-            val email = binding.editTextEmail.text.toString().trim()
-            val intent= Intent(this, App::class.java)
-            intent.putExtra("email",email)
+
+            val email = if (tabType == 0) {
+                // fetch email from database using phone number
+                val phone = binding.editTextphonenumber.text.toString().trim()
+                databaseHelper.getEmailByPhone(phone)
+            } else {
+                binding.editTextEmail.text.toString().trim()
+            }
+            val sharedPref = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+            sharedPref.edit()
+                .putBoolean("isLoggedIn", true)
+                .putString("loggedInEmail", email) // or use phone if you login via phone
+                .apply()
+            val intent = Intent(this, App::class.java)
+            intent.putExtra("email", email)
             startActivity(intent)
             finish()
-        } else {
+        }
+        else {
             Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show()
         }
+
     }
 }

@@ -92,12 +92,18 @@ class DatabaseHelper(private val context: Context):SQLiteOpenHelper(context, dat
             val firstname = cursor.getString(cursor.getColumnIndexOrThrow("firstname"))
             val lastname = cursor.getString(cursor.getColumnIndexOrThrow("Lastname"))
             val phone = cursor.getString(cursor.getColumnIndexOrThrow("phonenumber"))
+            val email = cursor.getString(cursor.getColumnIndexOrThrow("email"))
             val password = cursor.getString(cursor.getColumnIndexOrThrow("password"))
             cursor.close()
-            User(
-                firstname, lastname, phone, email, password,
-                password = TODO()
+            val user = User(
+                firstName = firstname,
+                lastName = lastname,
+                phoneNumber = phone,
+                email = email,
+                password = password
             )
+            cursor.close()
+            user
 
         } else {
             cursor.close()
@@ -105,6 +111,30 @@ class DatabaseHelper(private val context: Context):SQLiteOpenHelper(context, dat
         }
 
     }
+    fun getEmailByPhone(phone: String): String {
+        val db = readableDatabase
+        val query = "SELECT $column_email FROM $table_name WHERE $column_phonenumber = ?"
+        val cursor = db.rawQuery(query, arrayOf(phone))
+        var email = ""
+        if (cursor.moveToFirst()) {
+            email = cursor.getString(cursor.getColumnIndexOrThrow(column_email))
+        }
+        cursor.close()
+        db.close()
+        return email
+    }
+    fun updateUser(user: User): Int {
+        val db = writableDatabase
+        val values = ContentValues().apply {
+            put("firstname", user.firstName)
+            put("Lastname", user.lastName)
+            put("phonenumber", user.phoneNumber)
+            put("password", user.password)
+        }
+        return db.update("data", values, "email = ?", arrayOf(user.email))
+    }
+
+
 }
 
 

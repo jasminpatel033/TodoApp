@@ -5,6 +5,8 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class NoteDatabaseHelper(context: Context) : SQLiteOpenHelper(context, database_name,null,database_version){
     companion object{
@@ -50,11 +52,20 @@ class NoteDatabaseHelper(context: Context) : SQLiteOpenHelper(context, database_
             val content = cursor.getString(cursor.getColumnIndexOrThrow(column_content))
             val date = cursor.getString(cursor.getColumnIndexOrThrow(column_date))
             val note = Note(id,title,content,date)
+
             notesList.add(note)
         }
         cursor.close()
         db.close()
-        return notesList
+        val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+        return notesList.sortedBy {
+            try {
+                sdf.parse(it.date)
+            }catch (e: Exception){
+                null
+            }
+
+        }
     }
     fun updateNote(note: Note){
         val db = writableDatabase
