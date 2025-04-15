@@ -13,7 +13,7 @@ class DatabaseHelper(private val context: Context):SQLiteOpenHelper(context, dat
         private const val table_name = "data"
         private const val column_id = "id"
         private const val column_firstname = "firstname"
-        private const val column_lastname = "Lastname"
+        private const val column_Lastname = "Lastname"
         private const val column_phonenumber = "phonenumber"
         private const val column_email = "email"
         private const val column_password = "password"
@@ -23,7 +23,7 @@ class DatabaseHelper(private val context: Context):SQLiteOpenHelper(context, dat
         val createTableQuery = ("create table $table_name(" +
                 "$column_id integer primary key autoincrement, " +
                 "$column_firstname text," +
-                "$column_lastname text," +
+                "$column_Lastname text," +
                 "$column_phonenumber text," +
                 "$column_email text," +
                 "$column_password text)")
@@ -38,14 +38,14 @@ class DatabaseHelper(private val context: Context):SQLiteOpenHelper(context, dat
 
     fun insertUser(
         firstname: String,
-        lastname: String,
+        Lastname: String,
         phonenumber: String,
         email: String,
         password: String
     ): Long {
         val values = ContentValues().apply {
             put(column_firstname, firstname);
-            put(column_lastname, lastname);
+            put(column_Lastname, Lastname);
             put(column_phonenumber, phonenumber);
             put(column_email, email);
             put(column_password, password);
@@ -90,14 +90,14 @@ class DatabaseHelper(private val context: Context):SQLiteOpenHelper(context, dat
         )
         return if (cursor.moveToFirst()) {
             val firstname = cursor.getString(cursor.getColumnIndexOrThrow("firstname"))
-            val lastname = cursor.getString(cursor.getColumnIndexOrThrow("Lastname"))
+            val Lastname = cursor.getString(cursor.getColumnIndexOrThrow("Lastname"))
             val phone = cursor.getString(cursor.getColumnIndexOrThrow("phonenumber"))
             val email = cursor.getString(cursor.getColumnIndexOrThrow("email"))
             val password = cursor.getString(cursor.getColumnIndexOrThrow("password"))
             cursor.close()
             val user = User(
                 firstName = firstname,
-                lastName = lastname,
+                lastName = Lastname,
                 phoneNumber = phone,
                 email = email,
                 password = password

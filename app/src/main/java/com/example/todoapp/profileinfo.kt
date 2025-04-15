@@ -16,7 +16,12 @@ class profileinfo : AppCompatActivity() {
         binding = ActivityProfileinfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val email = intent.getStringExtra("email") ?: ""
+        val email = intent.getStringExtra("email")
+            ?: getSharedPreferences("MyPrefs", MODE_PRIVATE).getString("loggedInEmail", "")
+            ?: ""
+        Toast.makeText(this, "Email passed: $email", Toast.LENGTH_LONG).show()
+
+
         val dbHelper = DatabaseHelper(this)
         val user = dbHelper.getUserByEmail(email)
         if(user != null){

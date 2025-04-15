@@ -32,12 +32,23 @@ class NotesAdapter(private var notes: List<Note>,context: Context):
         holder.titleTaxtView.text=note.title
         holder.contentTextView.text=note.content
         holder.itemView.findViewById<TextView>(R.id.noteDate).text = note.date
+        val layoutParams = holder.itemView.layoutParams as ViewGroup.MarginLayoutParams
+        if (position == 0) {
+            layoutParams.topMargin = 12.dpToPx(holder.itemView.context)
+        } else {
+            layoutParams.topMargin = 0
+        }
+        holder.itemView.layoutParams = layoutParams
+
+
+
         holder.updateButton.setOnClickListener{
             val intent=Intent(holder.itemView.context,UpdateNoteActivity::class.java).apply {
                 putExtra("note_id",note.id)
             }
             holder.itemView.context.startActivity(intent)
         }
+
         holder.deleteButton.setOnClickListener{
             db.deleteNote(note.id)
             refreshData(db.getAllNotes())
@@ -48,5 +59,10 @@ class NotesAdapter(private var notes: List<Note>,context: Context):
         notes = newNotes
         notifyDataSetChanged()
     }
+    fun Int.dpToPx(context: Context): Int {
+        return (this * context.resources.displayMetrics.density).toInt()
+    }
+
 
 }
+

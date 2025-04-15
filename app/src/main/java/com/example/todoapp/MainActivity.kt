@@ -63,6 +63,8 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+
     }
     // Modified login logic based on tab type
     private fun loginDatabase(identifier: String, password: String, tabType: Int) {
@@ -85,10 +87,10 @@ class MainActivity : AppCompatActivity() {
                 binding.editTextEmail.text.toString().trim()
             }
             val sharedPref = getSharedPreferences("MyPrefs", MODE_PRIVATE)
-            sharedPref.edit()
-                .putBoolean("isLoggedIn", true)
-                .putString("loggedInEmail", email) // or use phone if you login via phone
-                .apply()
+            val editor = sharedPref.edit()
+            editor.putBoolean("isLoggedIn", true)
+            editor.putString("loggedInEmail", email) // or use phone if you login via phone
+            editor.apply()
             val intent = Intent(this, App::class.java)
             intent.putExtra("email", email)
             startActivity(intent)
@@ -97,6 +99,8 @@ class MainActivity : AppCompatActivity() {
         else {
             Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show()
         }
+
+
 
     }
 }

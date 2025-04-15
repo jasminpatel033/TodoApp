@@ -8,46 +8,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Title -->
+
+    <!-- Profile Icon -->
+
+    <!-- RecyclerView -->
+
     <TextView
+        android:id="@+id/titleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="16dp"
-        android:text="TodoList."
         android:layout_marginStart="18dp"
+        android:layout_marginTop="10dp"
+        android:text="TodoList."
         android:textColor="@color/black"
-        android:textSize="24dp"/>
+        android:textSize="20sp" />
 
-     <ImageView
+    <ImageView
         android:id="@+id/profileButton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-         android:layout_marginTop="5dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignTop="@id/titleText"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="28dp"
-        android:src="@drawable/vecteezy_profile_icon_design_vector_5544718"/>
+        android:layout_marginTop="-3dp"
+
+        android:layout_marginEnd="17dp"
+        android:contentDescription="Profile"
+        android:src="@drawable/vecteezy_profile_icon_design_vector_5544718" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notesRecyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
-        android:background="#B7F173"
-        android:padding="16dp"/>
+        android:backgroundTint="#F2E7E2E2"
+        android:layout_below="@id/titleText"
+        android:layout_marginTop="6dp"
+        android:padding="0dp"
+        android:clipToPadding="false"
+        android:background="#EDE7E7" />
 
+    <!-- Floating Action Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/addButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="TODO"
         android:src="@drawable/baseline_add_24"
-        app:tint="@color/white"
-        android:backgroundTint="@color/black"/>
-
+        android:contentDescription="Add Note"
+        android:backgroundTint="#B7F173"
+        app:tint="@color/black" />
 </RelativeLayout>
