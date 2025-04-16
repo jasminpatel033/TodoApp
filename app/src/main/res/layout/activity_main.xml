@@ -14,6 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login to access your account"
+        android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
@@ -58,6 +59,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Phone Number"
+        android:textColor="@color/black"
         android:inputType="phone"
         android:padding="10dp"
         android:textSize="16sp"
@@ -89,7 +91,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="470dp" />
+        app:layout_constraintGuide_percent="0.22" />
 
 
     <!-- Password -->
@@ -101,6 +103,7 @@
         android:inputType="textPassword"
         android:padding="10dp"
         android:textSize="16sp"
+        android:textColor="@color/black"
         android:background="@drawable/rounded_corner"
         app:layout_constraintTop_toBottomOf="@id/guidelineInputEnd"
         app:layout_constraintStart_toStartOf="parent"
