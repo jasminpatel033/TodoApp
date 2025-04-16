@@ -12,7 +12,7 @@ import java.util.Locale
 class AddNoteActivity : AppCompatActivity() {
     private  lateinit var binding: ActivityAddNoteBinding
     private lateinit var db:NoteDatabaseHelper
-    private var selectedDate: String = " "
+    private var selectedDate: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

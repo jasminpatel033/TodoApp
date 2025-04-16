@@ -13,11 +13,10 @@ class MainActivity2 : AppCompatActivity() {
 
         val sharedPref = getSharedPreferences("MyPrefs", MODE_PRIVATE)
         val isLoggedIn = sharedPref.getBoolean("isLoggedIn", false)
-
-        if (isLoggedIn) {
-            val email = sharedPref.getString("email", "")
+        val savedEmail = sharedPref.getString("loggedInEmail", "")
+        if (isLoggedIn && !savedEmail.isNullOrEmpty()) {
             val intent = Intent(this, App::class.java)
-            intent.putExtra("email", email)
+            intent.putExtra("email", savedEmail)
             startActivity(intent)
         } else {
             val intent = Intent(this, MainActivity::class.java) // your login/signup screen

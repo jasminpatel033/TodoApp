@@ -87,10 +87,9 @@ class MainActivity : AppCompatActivity() {
                 binding.editTextEmail.text.toString().trim()
             }
             val sharedPref = getSharedPreferences("MyPrefs", MODE_PRIVATE)
-            val editor = sharedPref.edit()
-            editor.putBoolean("isLoggedIn", true)
-            editor.putString("loggedInEmail", email) // or use phone if you login via phone
-            editor.apply()
+            sharedPref.edit().putString("loggedInEmail", email).apply()
+            sharedPref.edit().putBoolean("isLoggedIn", true).apply()
+
             val intent = Intent(this, App::class.java)
             intent.putExtra("email", email)
             startActivity(intent)

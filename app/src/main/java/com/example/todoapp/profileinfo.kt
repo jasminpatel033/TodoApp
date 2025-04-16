@@ -16,10 +16,10 @@ class profileinfo : AppCompatActivity() {
         binding = ActivityProfileinfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val email = intent.getStringExtra("email")
-            ?: getSharedPreferences("MyPrefs", MODE_PRIVATE).getString("loggedInEmail", "")
-            ?: ""
-        Toast.makeText(this, "Email passed: $email", Toast.LENGTH_LONG).show()
+        val sharedPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+        val email = intent.getStringExtra("email") ?: sharedPrefs.getString("loggedInEmail", "") ?: ""
+
+
 
 
         val dbHelper = DatabaseHelper(this)
@@ -40,31 +40,69 @@ class profileinfo : AppCompatActivity() {
         binding.editTextPassword.isEnabled = true
 
         binding.buttonUpdate.setOnClickListener {
-            val updatedUser = User(
-                binding.editTextfirstname.text.toString(),
-                binding.editTextlastname.text.toString(),
-                binding.editTextPhone.text.toString(),
-                binding.editTextEmail.text.toString(),
-                binding.editTextPassword.text.toString()
-            )
+            val firstName = binding.editTextfirstname.text.toString().trim()
+            val lastName = binding.editTextlastname.text.toString().trim()
+            val phone = binding.editTextPhone.text.toString().trim()
+            val emailField = binding.editTextEmail.text.toString().trim()
+            val password = binding.editTextPassword.text.toString().trim()
 
-            val dbHelper = DatabaseHelper(this)
-            val result = dbHelper.updateUser(updatedUser)
+            // Validate fields
+            when {
+                firstName.isEmpty() -> {
+                    binding.editTextfirstname.error = "First name required"
+                }
+                lastName.isEmpty() -> {
+                    binding.editTextlastname.error = "Last name required"
+                }
+                phone.length != 10 -> {
+                    binding.editTextPhone.error = "Enter valid 10-digit phone number"
+                }
+                !android.util.Patterns.EMAIL_ADDRESS.matcher(emailField).matches() -> {
+                    binding.editTextEmail.error = "Enter valid email"
+                }
+                password.length < 6 -> {
+                    binding.editTextPassword.error = "Password must be at least 6 characters"
+                }
+                else -> {
+                    val updatedUser = User(
+                        firstName,
+                        lastName,
+                        phone,
+                        emailField,
+                        password
+                    )
 
-            if (result > 0) {
-                Toast.makeText(this, "Profile updated", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Update failed", Toast.LENGTH_SHORT).show()
+                    val dbHelper = DatabaseHelper(this)
+                    val result = dbHelper.updateUser(updatedUser)
+
+                    if (result > 0) {
+                        Toast.makeText(this, "Profile updated", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this, "Update failed", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
-        binding.logoutButton.setOnClickListener {
-            val sharedPref = getSharedPreferences("MyPrefs", MODE_PRIVATE)
-            sharedPref.edit().clear().apply() // Clears isLoggedIn and email
 
-            val intent = Intent(this, MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-            finish()
+        binding.logoutButton.setOnClickListener {
+            binding.logoutButton.setOnClickListener {
+                val db = DatabaseHelper(this)
+                val isDeleted = db.deleteUserByEmail(email)
+                if (isDeleted) {
+                    Toast.makeText(this, "Account deleted", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Failed to delete account", Toast.LENGTH_SHORT).show()
+                }
+
+                val sharedPref = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+                sharedPref.edit().clear().apply()
+
+                val intent = Intent(this, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
+            }
+
         }
 
 

@@ -133,6 +133,12 @@ class DatabaseHelper(private val context: Context):SQLiteOpenHelper(context, dat
         }
         return db.update("data", values, "email = ?", arrayOf(user.email))
     }
+    fun deleteUserByEmail(email: String): Boolean {
+        val db = this.writableDatabase
+        val result = db.delete(table_name, "$column_email = ?", arrayOf(email))
+        return result > 0
+    }
+
 
 
 }
